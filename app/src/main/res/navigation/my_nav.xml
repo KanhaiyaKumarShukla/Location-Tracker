@@ -16,16 +16,54 @@
         <action
             android:id="@+id/action_usersEntryFragment_to_userLocationService"
             app:destination="@id/userLocationService" />
+        <action
+            android:id="@+id/action_usersEntryFragment_to_employesLocation2"
+            app:destination="@id/employesLocation" />
     </fragment>
     <fragment
         android:id="@+id/employesLocation"
         android:name="com.exa.android.loctrace.EmployeeLocation"
         android:label="fragment_employes_location"
-        tools:layout="@layout/fragment_employes_location" >
+        tools:layout="@layout/fragment_employee_location" >
     </fragment>
     <fragment
         android:id="@+id/userLocationService"
         android:name="com.exa.android.loctrace.UserLocationService"
         android:label="fragment_user_location_service"
         tools:layout="@layout/fragment_user_location_service" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.exa.android.loctrace.Fragments.Authentication.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_usersEntryFragment"
+            app:destination="@id/usersEntryFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.exa.android.loctrace.Fragments.Authentication.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employesFragment"
+        android:name="com.exa.android.loctrace.Fragments.Employee.EmployesFragment"
+        android:label="fragment_employes"
+        tools:layout="@layout/fragment_employes" />
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.exa.android.loctrace.Fragments.Admin.AdminFragment"
+        android:label="fragment_employee_location"
+        tools:layout="@layout/fragment_employee_location" />
+    <fragment
+        android:id="@+id/usersEntryFragment2"
+        android:name="com.exa.android.loctrace.Fragments.UsersEntryFragment"
+        android:label="UsersEntryFragment" />
 </navigation>

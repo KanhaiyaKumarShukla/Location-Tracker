@@ -3,4 +3,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="map_api_key">AIzaSyDug9k_KuqVZ-o60JooKCqmK-9UzFy9fio</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signin_now">Signin Now</string>
+    <string name="signin_text">Enter Required Data to SignIn</string>
+    <string name="username">UserName</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account_signup">Donn\'t have an account? SignUp</string>
+    <string name="sign_up_now">Sign Up Now</string>
+    <string name="signup_text">Enter Required Data to Register</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_account">Already have a account! Sign In</string>
 </resources>

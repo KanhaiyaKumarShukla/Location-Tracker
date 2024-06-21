@@ -4,9 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
@@ -15,6 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import com.exa.android.loctrace.Helper.constants
 import com.exa.android.loctrace.databinding.FragmentUserLocationServiceBinding
 import com.firebase.geofire.GeoFire
 import com.firebase.geofire.GeoLocation
@@ -30,6 +34,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.util.UUID
 
 class UserLocationService : Fragment() {
 
@@ -38,7 +43,11 @@ class UserLocationService : Fragment() {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var debRef: DatabaseReference
     private lateinit var geoFire: GeoFire
-
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var geofire: GeoFire
+    private val handler = Handler(Looper.getMainLooper())
+    private val userName="Kanha"
+    private var isCapturingDestinationLocation=true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +63,8 @@ class UserLocationService : Fragment() {
 
         debRef= FirebaseDatabase.getInstance().reference.child("Locations")
         geoFire= GeoFire(debRef)
+        dbRef= FirebaseDatabase.getInstance().reference.child(userName)
+        geofire= GeoFire(dbRef)
 
         mFusedLocationClient= LocationServices.getFusedLocationProviderClient(requireContext())
         if(!isLocationEnable()){
@@ -114,7 +125,9 @@ class UserLocationService : Fragment() {
         //This line sets the priority of the location request to high accuracy.
         mLocationRequest.priority=LocationRequest.PRIORITY_HIGH_ACCURACY
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+        handler.post(locationUpdateRunnable)
     }
+
     private val TAG="LocationService"
     private val mLocationCallback=object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult) {
@@ -126,9 +139,16 @@ class UserLocationService : Fragment() {
             if (latitude != null && longitude != null) {
                 Log.i(TAG, "$longitude *** $latitude")
 
-                geoFire.setLocation("Kanhaiya", GeoLocation(latitude, longitude))
-                geoFire.setLocation("Vishal", GeoLocation(23.258530, 77.407849))
-                geoFire.setLocation("Ankit", GeoLocation(23.260587, 77.426248))
+              Log.d("useelocation",constants.isCapturingStartLocation.toString())
+                if (constants.isCapturingStartLocation) {
+                    geofire.setLocation("start_location", GeoLocation(latitude, longitude))
+                    makeToast("Start location captured.")
+                    constants.isCapturingStartLocation=false
+                } else if (isCapturingDestinationLocation) {
+                    geofire.setLocation("destination_location", GeoLocation(latitude, longitude))
+                    makeToast("Destination location captured.")
+                }
+                geoFire.setLocation(userName, GeoLocation(latitude, longitude))
 
             }else{
                 makeToast("Latitude and Longitude null found!")
@@ -136,11 +156,54 @@ class UserLocationService : Fragment() {
             }
         }
     }
+    private val locationUpdateRunnable = object : Runnable {
+        override fun run() {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            mFusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+
+                    if (isCapturingDestinationLocation) {
+                        geofire.setLocation("destination_location", GeoLocation(location.latitude, location.longitude))
+                        makeToast("Destination location captured.")
+                    }
+                    geoFire.setLocation(userName, GeoLocation(location.latitude, location.longitude))
+                }
+            }
+            handler.postDelayed(this,  1000) // 1 minutes in milliseconds
+        }
+    }
     private fun isLocationEnable():Boolean{
         val locationManager: LocationManager =requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
     private fun makeToast( text:String){
-        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+        if (isAdded) {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacks(locationUpdateRunnable)
+        _binding = null
     }
 }
