@@ -33,8 +33,14 @@ Project Link: https://github.com/KanhaiyaKumarShukla/Location-Tracker
 
 ### Polylines drawn on Google map according to users locations
 ![img1](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/bddb1387-aae4-4489-8b01-09f1088d5e7c)
-![img2](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/dd452361-344b-4fb3-9990-63965345b092)
+![img2 (1)](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/23890e49-aa44-4e5d-a2a3-d5df5dfb25b0)
+
 
 ### Routes drawn on Google map according to users movement
-![img3](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/8ae71cd5-7e85-42c1-b25d-b10f3a2470c7)
+![img3](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/eddbc0f6-9d71-438d-a2eb-91fbffb103f6)
+
+
+https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/c42b781f-087e-4bfc-8a3d-4da6ee969306
+
+
 
