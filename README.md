@@ -30,9 +30,11 @@ This Android application, built using Kotlin and XML, allows company employers (
 Project Link: https://github.com/KanhaiyaKumarShukla/Location-Tracker
 
 ## Screen Shorts:
-![img1](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/423ed545-edc3-4102-a7c8-6085f991c04e)
-![img2](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/3c573961-a69d-41e9-a87b-0d00d6531f15)
-![img3](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/019b4c1f-3c29-4b89-b195-eafb7b35ab25)
 
+### Polylines drawn on Google map according to users locations
+![img1](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/bddb1387-aae4-4489-8b01-09f1088d5e7c)
+![img2](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/dd452361-344b-4fb3-9990-63965345b092)
 
+### Routes drawn on Google map according to users movement
+![img3](https://github.com/KanhaiyaKumarShukla/Location-Tracker/assets/148223010/8ae71cd5-7e85-42c1-b25d-b10f3a2470c7)
 
